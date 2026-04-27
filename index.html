@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+<meta name="theme-color" content="#2aa04a">
+<meta name="description" content="Generatore di Final Book per Vetroresina Engineering Development S.r.l.">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="VED Book">
+
+<title>VED Final Book Generator</title>
+
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" href="assets/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/icon-192.png">
+
+<link rel="stylesheet" href="styles.css">
+
+<!-- Librerie esterne (cached dal Service Worker dopo la prima visita) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+</head>
+<body>
+
+<div class="install-banner" id="installBanner">
+  <span>📱 Installa l'app sul tuo dispositivo per un accesso rapido</span>
+  <div style="display:flex; gap:8px;">
+    <button class="btn" onclick="installPWA()">Installa</button>
+    <button class="install-banner-close" onclick="dismissInstallBanner()" aria-label="Chiudi">✕</button>
+  </div>
+</div>
+
+<header class="app-header">
+  <div class="app-header-left">
+    <img src="assets/logo_ved.png" class="app-header-logo" alt="VED">
+    <div class="app-header-text">
+      <div class="app-header-title">Final Book Generator</div>
+      <div class="app-header-subtitle">Vetroresina Engineering Development</div>
+    </div>
+  </div>
+  <div class="app-header-actions">
+    <button class="btn btn-secondary" onclick="newBook()" title="Nuovo book">📄 Nuovo</button>
+    <button class="btn btn-secondary" onclick="saveBook()" title="Salva book in locale">💾 Salva</button>
+    <button class="btn btn-primary" onclick="generatePDF()" title="Genera PDF completo">⬇ PDF</button>
+  </div>
+</header>
+
+<main class="container">
+
+  <nav class="tabs" role="tablist">
+    <button class="tab active" data-tab="edit" role="tab">✏️ Compila</button>
+    <button class="tab" data-tab="preview" role="tab">👁 Anteprima</button>
+    <button class="tab" data-tab="books" role="tab">📚 Book Salvati</button>
+  </nav>
+
+  <!-- ============ TAB COMPILA ============ -->
+  <section class="tab-content active" id="tab-edit">
+
+    <!-- COPERTINA -->
+    <div class="panel">
+      <h2 class="panel-title">📋 Pagina 1 — Copertina</h2>
+      <div class="form-row">
+        <label for="clientLine1">Cliente (riga 1)</label>
+        <input type="text" id="clientLine1">
+      </div>
+      <div class="form-row">
+        <label for="clientLine2">Cliente (riga 2)</label>
+        <input type="text" id="clientLine2">
+      </div>
+      <div class="form-row">
+        <label for="plant">Impianto</label>
+        <input type="text" id="plant">
+      </div>
+      <div class="form-row">
+        <label for="itemCode">Codice Item</label>
+        <input type="text" id="itemCode">
+      </div>
+      <div class="form-row">
+        <label for="itemDesc">Descrizione Item</label>
+        <input type="text" id="itemDesc">
+      </div>
+      <div class="form-row">
+        <label for="interventionDate">Data Intervento</label>
+        <input type="text" id="interventionDate">
+      </div>
+    </div>
+
+    <!-- SOMMARIO -->
+    <div class="panel">
+      <h2 class="panel-title">
+        📑 Pagina 2 — Sommario
+        <button class="btn btn-small btn-secondary" onclick="addSommarioItem()">+ Aggiungi voce</button>
+      </h2>
+      <div class="form-row">
+        <label for="commessaNum">Commessa N°</label>
+        <input type="text" id="commessaNum">
+      </div>
+      <div class="form-row">
+        <label for="ordNum">ORD</label>
+        <input type="text" id="ordNum">
+      </div>
+      <div id="sommarioItems"></div>
+    </div>
+
+    <!-- PROGETTO -->
+    <div class="panel">
+      <h2 class="panel-title">📐 1. Progetto</h2>
+      <div class="upload-section">
+        <h4>PDF Progetto
+          <label for="uploadProgetto" class="btn btn-small btn-primary" style="cursor:pointer;">+ Carica PDF</label>
+          <input type="file" id="uploadProgetto" accept="application/pdf" multiple style="display:none" onchange="handleUpload(event, 'progetto')">
+        </h4>
+        <div class="upload-files-list" id="filesProgetto"></div>
+      </div>
+    </div>
+
+    <!-- DISEGNI -->
+    <div class="panel">
+      <h2 class="panel-title">🎨 2. Disegni</h2>
+      <div class="upload-section">
+        <h4>Disegno Meccanico / Complessivo
+          <label for="uploadDisegni" class="btn btn-small btn-primary" style="cursor:pointer;">+ Carica PDF</label>
+          <input type="file" id="uploadDisegni" accept="application/pdf" multiple style="display:none" onchange="handleUpload(event, 'disegni')">
+        </h4>
+        <div class="upload-files-list" id="filesDisegni"></div>
+      </div>
+      <div class="upload-section">
+        <h4>Disegno con Tracciabilità Materiali
+          <label for="uploadTracciabilita" class="btn btn-small btn-primary" style="cursor:pointer;">+ Carica PDF</label>
+          <input type="file" id="uploadTracciabilita" accept="application/pdf" multiple style="display:none" onchange="handleUpload(event, 'tracciabilita')">
+        </h4>
+        <div class="upload-files-list" id="filesTracciabilita"></div>
+      </div>
+    </div>
+
+    <!-- TABELLA MATERIALI -->
+    <div class="panel">
+      <h2 class="panel-title">
+        📊 3. Tabella Identificazione Materiali Base
+        <button class="btn btn-small btn-secondary" onclick="addMaterialRow()">+ Riga</button>
+      </h2>
+      <div class="form-row"><label for="matProgetto">Progetto</label><input type="text" id="matProgetto"></div>
+      <div class="form-row"><label for="matContratto">Contratto N°</label><input type="text" id="matContratto"></div>
+      <div class="form-row"><label for="matCliente">Cliente</label><input type="text" id="matCliente"></div>
+      <div class="form-row"><label for="matData">Data</label><input type="text" id="matData"></div>
+      <div class="form-row"><label for="matLocalita">Località</label><input type="text" id="matLocalita"></div>
+      <div class="form-row"><label for="matImpianto">Impianto</label><input type="text" id="matImpianto"></div>
+      <div class="form-row"><label for="matScatola">Scatola</label><input type="text" id="matScatola"></div>
+      <div class="form-row"><label for="matDisegno">Disegno N°</label><input type="text" id="matDisegno"></div>
+      <div class="form-row"><label for="matRev">Foglio / Rev.</label><input type="text" id="matRev"></div>
+
+      <div class="materiali-table-wrapper">
+        <table class="materiali-table">
+          <thead>
+            <tr>
+              <th style="width:40px">POS. N°</th>
+              <th>Certificato N°</th>
+              <th style="width:100px">Colata N°</th>
+              <th style="width:100px">Codice Colata N°</th>
+              <th style="width:50px">Ø" mm</th>
+              <th style="width:90px">Serie/Spess./SCH.</th>
+              <th style="width:110px">Tipo Materiale</th>
+              <th>NOTE / Descrizione</th>
+            </tr>
+          </thead>
+          <tbody id="materialiRows"></tbody>
+        </table>
+      </div>
+
+      <!-- Timbro personalizzabile -->
+      <div class="upload-section" style="margin-top: 16px;">
+        <h4>Timbro Appaltatore (sezione "APPALTATORE" della tabella)
+          <span style="display:flex; gap:6px;">
+            <label for="uploadTimbro" class="btn btn-small btn-primary" style="cursor:pointer;">+ Carica timbro</label>
+            <button class="btn btn-small btn-secondary" id="resetTimbroBtn" onclick="resetTimbro()" style="display:none;">Ripristina default</button>
+          </span>
+          <input type="file" id="uploadTimbro" accept="image/*" style="display:none" onchange="handleTimbroUpload(event)">
+        </h4>
+        <div id="timbroPreviewArea" style="margin-top:10px; text-align:center;">
+          <div id="timbroPreviewLabel" style="font-size:11px; color:#666; margin-bottom:6px;">Timbro attualmente in uso:</div>
+          <img id="timbroPreview" src="assets/timbro_ved.png" alt="Timbro" style="max-width: 200px; max-height: 100px; border: 1px dashed #ccc; padding: 8px; background: white; border-radius: 4px;">
+        </div>
+      </div>
+    </div>
+
+    <!-- CERTIFICATI LAMIERA -->
+    <div class="panel">
+      <h2 class="panel-title">📄 4. Certificato Lamiera (EN 10204 3.1)</h2>
+      <div class="upload-section">
+        <h4>PDF Certificati Lamiera
+          <label for="uploadCertLamiera" class="btn btn-small btn-primary" style="cursor:pointer;">+ Carica PDF</label>
+          <input type="file" id="uploadCertLamiera" accept="application/pdf" multiple style="display:none" onchange="handleUpload(event, 'certLamiera')">
+        </h4>
+        <div class="upload-files-list" id="filesCertLamiera"></div>
+      </div>
+    </div>
+
+    <!-- CERTIFICATI TIRANTI -->
+    <div class="panel">
+      <h2 class="panel-title">📄 5. Certificato Tiranti e Dadi (EN 10204 3.1)</h2>
+      <div class="upload-section">
+        <h4>PDF Certificati Tiranti/Dadi
+          <label for="uploadCertTiranti" class="btn btn-small btn-primary" style="cursor:pointer;">+ Carica PDF</label>
+          <input type="file" id="uploadCertTiranti" accept="application/pdf" multiple style="display:none" onchange="handleUpload(event, 'certTiranti')">
+        </h4>
+        <div class="upload-files-list" id="filesCertTiranti"></div>
+      </div>
+    </div>
+
+    <!-- DATASHEET -->
+    <div class="panel">
+      <h2 class="panel-title">📄 6. Technical Datasheet Sealant Compound</h2>
+      <div class="upload-section">
+        <h4>PDF Datasheet Sealant
+          <label for="uploadDatasheet" class="btn btn-small btn-primary" style="cursor:pointer;">+ Carica PDF</label>
+          <input type="file" id="uploadDatasheet" accept="application/pdf" multiple style="display:none" onchange="handleUpload(event, 'datasheet')">
+        </h4>
+        <div class="upload-files-list" id="filesDatasheet"></div>
+      </div>
+    </div>
+
+    <!-- ALTRI -->
+    <div class="panel">
+      <h2 class="panel-title">📄 7+ Altri Certificati (opzionali)</h2>
+      <div class="upload-section">
+        <h4>Certificati Test Eseguiti
+          <label for="uploadTest" class="btn btn-small btn-primary" style="cursor:pointer;">+ Carica PDF</label>
+          <input type="file" id="uploadTest" accept="application/pdf" multiple style="display:none" onchange="handleUpload(event, 'test')">
+        </h4>
+        <div class="upload-files-list" id="filesTest"></div>
+      </div>
+      <div class="upload-section">
+        <h4>Certificati Saldature
+          <label for="uploadSaldature" class="btn btn-small btn-primary" style="cursor:pointer;">+ Carica PDF</label>
+          <input type="file" id="uploadSaldature" accept="application/pdf" multiple style="display:none" onchange="handleUpload(event, 'saldature')">
+        </h4>
+        <div class="upload-files-list" id="filesSaldature"></div>
+      </div>
+      <div class="upload-section">
+        <h4>Altri PDF extra
+          <label for="uploadExtra" class="btn btn-small btn-primary" style="cursor:pointer;">+ Carica PDF</label>
+          <input type="file" id="uploadExtra" accept="application/pdf" multiple style="display:none" onchange="handleUpload(event, 'extra')">
+        </h4>
+        <div class="upload-files-list" id="filesExtra"></div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ============ TAB ANTEPRIMA ============ -->
+  <section class="tab-content" id="tab-preview">
+    <div id="previewArea">
+      <div id="previewPages"></div>
+    </div>
+  </section>
+
+  <!-- ============ TAB BOOKS ============ -->
+  <section class="tab-content" id="tab-books">
+    <div class="panel">
+      <h2 class="panel-title">📚 Book salvati in locale</h2>
+      <div class="books-list" id="booksList"></div>
+    </div>
+  </section>
+
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<div class="loading-overlay" id="loading" role="alert" aria-live="assertive">
+  <div class="spinner"></div>
+  <div id="loadingText">Elaborazione...</div>
+</div>
+
+<script src="app.js" defer></script>
+</body>
+</html>
