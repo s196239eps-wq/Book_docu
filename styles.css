@@ -1,0 +1,1145 @@
+/* ==========================================================================
+   VED Final Book Generator - Stili
+   Responsive design per desktop, tablet, smartphone
+   ========================================================================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --ved-green: #2aa04a;
+  --ved-green-dark: #228a3f;
+  --ved-red: #e53935;
+  --ved-red-dark: #c62828;
+  --ved-blue-light: #a8c5d8;
+  --ved-blue-cover: #6b86a3;
+  --border: #d1d5db;
+  --bg-soft: #f5f7fa;
+  --bg-dark: #4a4a4a;
+  --text: #222;
+  --text-light: #666;
+  --text-muted: #999;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 2px 6px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.15);
+  --radius: 8px;
+  --radius-sm: 5px;
+  --transition: all 0.2s ease;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg-soft);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+input, textarea, select {
+  font-family: inherit;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ==========================================================================
+   HEADER APP
+   ========================================================================== */
+
+.app-header {
+  background: white;
+  border-bottom: 2px solid var(--ved-green);
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  box-shadow: var(--shadow-md);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.app-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  flex: 1;
+}
+
+.app-header-logo {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+}
+
+.app-header-text {
+  min-width: 0;
+}
+
+.app-header-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--ved-green);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.app-header-subtitle {
+  font-size: 0.6875rem;
+  color: var(--text-light);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.app-header-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   BUTTONS
+   ========================================================================== */
+
+.btn {
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  border: none;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  white-space: nowrap;
+  min-height: 36px;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn-primary {
+  background: var(--ved-green);
+  color: white;
+}
+.btn-primary:hover { background: var(--ved-green-dark); }
+
+.btn-secondary {
+  background: #f0f0f0;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+.btn-secondary:hover { background: #e0e0e0; }
+
+.btn-danger {
+  background: var(--ved-red);
+  color: white;
+}
+.btn-danger:hover { background: var(--ved-red-dark); }
+
+.btn-small {
+  padding: 4px 10px;
+  font-size: 0.6875rem;
+  min-height: 28px;
+}
+
+.btn-icon {
+  width: 36px;
+  padding: 8px;
+}
+
+/* ==========================================================================
+   CONTAINER
+   ========================================================================== */
+
+.container {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 0 20px;
+}
+
+/* ==========================================================================
+   TABS
+   ========================================================================== */
+
+.tabs {
+  display: flex;
+  gap: 4px;
+  border-bottom: 2px solid var(--border);
+  margin-bottom: 20px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+}
+
+.tab {
+  padding: 10px 18px;
+  background: transparent;
+  border: none;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-light);
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  white-space: nowrap;
+  min-height: 40px;
+  transition: var(--transition);
+}
+
+.tab:hover { color: var(--text); }
+
+.tab.active {
+  color: var(--ved-green);
+  border-bottom-color: var(--ved-green);
+}
+
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* ==========================================================================
+   PANELS (formContenuto)
+   ========================================================================== */
+
+.panel {
+  background: white;
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-sm);
+}
+
+.panel-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ved-green);
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   FORM
+   ========================================================================== */
+
+.form-row {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+  align-items: center;
+}
+
+.form-row label {
+  font-weight: 600;
+  font-size: 0.8125rem;
+  color: var(--text-light);
+}
+
+.form-row input,
+.form-row textarea {
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  font-family: inherit;
+  background: white;
+  width: 100%;
+  min-height: 40px;
+}
+
+.form-row input:focus,
+.form-row textarea:focus {
+  outline: none;
+  border-color: var(--ved-green);
+  box-shadow: 0 0 0 3px rgba(42, 160, 74, 0.1);
+}
+
+/* ==========================================================================
+   SOMMARIO EDITOR
+   ========================================================================== */
+
+.sommario-item {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+  align-items: center;
+}
+
+.sommario-item .num {
+  font-weight: 600;
+  min-width: 30px;
+  color: var(--text-light);
+  font-size: 0.875rem;
+}
+
+.sommario-item input {
+  flex: 1;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.8125rem;
+  min-height: 36px;
+}
+
+.sommario-item input:focus {
+  outline: none;
+  border-color: var(--ved-green);
+}
+
+/* ==========================================================================
+   UPLOAD SECTIONS
+   ========================================================================== */
+
+.upload-section {
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+  margin-bottom: 12px;
+  background: var(--bg-soft);
+  transition: var(--transition);
+}
+
+.upload-section:hover {
+  border-color: var(--ved-green);
+}
+
+.upload-section h4 {
+  font-size: 0.8125rem;
+  color: var(--text);
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.upload-files-list {
+  margin-top: 10px;
+}
+
+.upload-file-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 10px;
+  background: white;
+  border-radius: 4px;
+  margin-bottom: 4px;
+  font-size: 0.75rem;
+}
+
+.file-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  flex: 1;
+}
+
+.file-info span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.file-icon {
+  width: 26px;
+  height: 26px;
+  background: var(--ved-red);
+  color: white;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.625rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.upload-empty {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-style: italic;
+  text-align: center;
+  padding: 10px;
+}
+
+/* ==========================================================================
+   TABELLA MATERIALI (editor)
+   ========================================================================== */
+
+.materiali-table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-top: 10px;
+}
+
+.materiali-table {
+  width: 100%;
+  min-width: 800px;
+  border-collapse: collapse;
+  font-size: 0.75rem;
+}
+
+.materiali-table th,
+.materiali-table td {
+  border: 1px solid #999;
+  padding: 4px 6px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.materiali-table th {
+  background: #fff59d;
+  text-align: center;
+  font-size: 0.6875rem;
+  font-weight: 700;
+}
+
+.materiali-table input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  font-size: 0.75rem;
+  padding: 4px;
+  min-height: 28px;
+}
+
+.materiali-table input:focus {
+  outline: 2px solid var(--ved-green);
+  background: #f0fff4;
+  border-radius: 2px;
+}
+
+/* ==========================================================================
+   PREVIEW - pagine A4
+   ========================================================================== */
+
+#previewArea {
+  background: var(--bg-dark);
+  padding: 20px;
+  border-radius: var(--radius);
+  overflow: auto;
+  max-height: 85vh;
+  -webkit-overflow-scrolling: touch;
+}
+
+.page {
+  width: 210mm;
+  min-height: 297mm;
+  margin: 0 auto 20px;
+  background: white;
+  box-shadow: var(--shadow-lg);
+  padding: 0;
+  position: relative;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  transform-origin: top center;
+  overflow: hidden;
+}
+
+/* ============ PAGINA 1 (COVER) ============ */
+
+.page-cover { padding: 0; }
+
+/* Header ricostruito in HTML/CSS (nitido a qualsiasi risoluzione) */
+.cover-header {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  background: white;
+}
+
+/* Barra rossa che si ferma PRIMA del logo TMS (lascia zona bianca a destra) */
+.cover-header-redbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(100% - 130px); /* si ferma prima del logo TMS */
+  height: 32px;
+  background: var(--ved-red);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 25px;
+}
+
+.cover-header-tms-text {
+  color: white;
+  font-weight: 700;
+  font-size: 13pt;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  letter-spacing: 0.3px;
+}
+
+/* Logo TMS in zona bianca a destra, sporge sopra la barra rossa */
+.cover-header-tms-logo {
+  position: absolute;
+  top: 8px;
+  right: 30px;
+  width: 90px;
+  height: auto;
+  z-index: 2;
+}
+
+/* Logo VED grande, più centrato verticalmente */
+.cover-header-ved-logo {
+  position: absolute;
+  top: 70px;
+  left: 80px;
+  width: 130px;
+  height: 130px;
+}
+
+.cover-client-block {
+  margin-left: 210px;
+  margin-top: 10px;
+}
+
+.cover-client-name {
+  font-size: 44pt;
+  color: var(--ved-blue-cover);
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: 0.5px;
+}
+
+.cover-client-name-2 {
+  font-size: 44pt;
+  color: var(--ved-blue-cover);
+  font-weight: 300;
+  margin-left: 30px;
+  margin-top: -10px;
+}
+
+.cover-plant {
+  font-size: 22pt;
+  color: #b0b0b0;
+  font-weight: 300;
+  margin-top: 8px;
+}
+
+.cover-item-block {
+  text-align: center;
+  margin-top: 140px;
+}
+
+.cover-item-code {
+  font-size: 56pt;
+  color: var(--ved-blue-cover);
+  font-weight: 300;
+  line-height: 1;
+}
+
+.cover-item-desc {
+  font-size: 26pt;
+  color: #b0b0b0;
+  font-weight: 300;
+  margin-top: 10px;
+}
+
+.cover-date-block {
+  text-align: center;
+  margin-top: 130px;
+  font-size: 16pt;
+  color: #b0b0b0;
+  font-weight: 300;
+}
+
+.cover-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.cover-banner {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ============ PAGINA 2 (SOMMARIO) ============ */
+
+.page-sommario { padding: 0; }
+
+.sommario-header {
+  display: grid;
+  grid-template-columns: 100px 1fr 1fr;
+  align-items: stretch;
+  border-bottom: 2px solid #333;
+  min-height: 90px;
+}
+
+.sommario-header-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+.sommario-header-logo img { width: 70px; }
+
+.sommario-header-left {
+  padding: 12px;
+  border-left: 1px solid #999;
+  border-right: 1px solid #999;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  font-size: 12pt;
+}
+
+.sommario-header-left .doc-title {
+  font-style: italic;
+  font-weight: 700;
+}
+
+.sommario-header-left .client-row {
+  display: flex;
+  gap: 12px;
+  font-size: 11pt;
+}
+
+.sommario-header-left .client-row .label {
+  font-style: italic;
+  font-weight: 700;
+}
+
+.sommario-header-right {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  font-size: 10pt;
+  position: relative;
+}
+
+.sommario-header-right .type-label {
+  position: absolute;
+  top: 6px;
+  right: 12px;
+  font-weight: 700;
+}
+
+.sommario-header-right .ord-row {
+  margin-top: 20px;
+  border-top: 1px solid #333;
+  padding-top: 8px;
+}
+
+.sommario-header-right .commessa-row {
+  margin-top: 6px;
+  border-top: 1px solid #333;
+  padding-top: 8px;
+}
+
+.sommario-title {
+  text-align: center;
+  font-size: 38pt;
+  color: var(--ved-blue-cover);
+  font-weight: 300;
+  margin-top: 50px;
+  margin-bottom: 40px;
+}
+
+.sommario-list {
+  padding: 0 80px;
+  font-size: 14pt;
+  color: var(--ved-blue-cover);
+  line-height: 1.8;
+  font-weight: 300;
+}
+
+.sommario-list-item {
+  display: flex;
+  gap: 8px;
+}
+
+.sommario-list-item .item-num { min-width: 25px; }
+
+.sommario-footer {
+  position: absolute;
+  bottom: 25px;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sommario-footer-line {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 0 25mm;
+}
+
+.sommario-footer-line::before,
+.sommario-footer-line::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #333;
+}
+
+.sommario-footer-badge {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+}
+
+.sommario-footer-pag {
+  width: 100%;
+  text-align: right;
+  padding: 6px 25mm 0;
+  font-size: 9pt;
+  color: #333;
+  font-style: italic;
+}
+
+/* ============ PAGINA TABELLA MATERIALI ============ */
+
+.page-materiali { padding: 20mm; }
+
+.materiali-page-header {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  border: 1px solid #000;
+  background: #e0e0e0;
+  padding: 8px;
+  align-items: center;
+}
+
+.materiali-page-header img { width: 60px; }
+
+.materiali-page-header h2 {
+  text-align: center;
+  font-size: 22pt;
+  font-weight: 700;
+  color: #333;
+}
+
+.materiali-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+  border-left: 1px solid #000;
+  border-right: 1px solid #000;
+  padding: 8px;
+  font-size: 11pt;
+}
+
+.materiali-info-grid .field {
+  display: flex;
+  gap: 8px;
+  padding: 2px 0;
+}
+
+.materiali-info-grid .field span.value {
+  font-weight: 700;
+  flex: 1;
+}
+
+.materiali-table-preview {
+  border: 1px solid #000;
+  border-top: none;
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 10pt;
+}
+
+.materiali-table-preview th {
+  background: #fff59d;
+  border: 1px solid #000;
+  padding: 4px;
+  font-weight: 700;
+}
+
+.materiali-table-preview td {
+  border: 1px solid #000;
+  padding: 3px 6px;
+  height: 22px;
+}
+
+.materiali-signatures {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  border: 1px solid #000;
+  border-top: none;
+}
+
+.materiali-signatures > div {
+  border-right: 1px solid #000;
+  height: 120px;
+  padding: 6px;
+  font-size: 10pt;
+  font-weight: 700;
+  text-align: center;
+  position: relative;
+}
+
+.materiali-signatures > div:last-child { border-right: none; }
+
+.materiali-signatures .timbro-ved {
+  width: 180px;
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* ==========================================================================
+   BOOKS LIST
+   ========================================================================== */
+
+.books-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.book-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  transition: var(--transition);
+}
+
+.book-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+.book-card-title {
+  font-weight: 700;
+  color: var(--ved-green);
+  margin-bottom: 8px;
+  font-size: 1rem;
+}
+
+.book-card-meta {
+  font-size: 0.75rem;
+  color: var(--text-light);
+  line-height: 1.5;
+}
+
+.book-card-meta strong { color: var(--text); }
+
+.book-card-actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.books-empty {
+  color: var(--text-muted);
+  padding: 40px 20px;
+  text-align: center;
+  font-size: 0.875rem;
+}
+
+/* ==========================================================================
+   TOAST
+   ========================================================================== */
+
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  padding: 12px 20px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  max-width: calc(100vw - 40px);
+  box-shadow: var(--shadow-lg);
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.toast.success { background: var(--ved-green); color: white; }
+.toast.error { background: var(--ved-red); color: white; }
+.toast.info { background: #2196f3; color: white; }
+
+/* ==========================================================================
+   INSTALL BANNER
+   ========================================================================== */
+
+.install-banner {
+  background: var(--ved-green);
+  color: white;
+  padding: 10px 16px;
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 0.8125rem;
+}
+
+.install-banner.show { display: flex; }
+
+.install-banner .btn {
+  background: white;
+  color: var(--ved-green);
+  padding: 6px 14px;
+  min-height: 32px;
+}
+
+.install-banner-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0 4px;
+}
+
+/* ==========================================================================
+   LOADING OVERLAY
+   ========================================================================== */
+
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  color: white;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+  text-align: center;
+}
+
+.loading-overlay.show { display: flex; }
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(255, 255, 255, 0.2);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ==========================================================================
+   RESPONSIVE - Tablet (max 900px)
+   ========================================================================== */
+
+@media (max-width: 900px) {
+  .container { padding: 0 14px; margin: 14px auto; }
+
+  .panel { padding: 16px; }
+
+  .app-header { padding: 10px 14px; }
+  .app-header-title { font-size: 1rem; }
+
+  /* La pagina A4 in preview si ridimensiona per entrare nel viewport */
+  .page {
+    width: 100%;
+    max-width: 210mm;
+    transform: scale(0.75);
+    transform-origin: top center;
+    margin-bottom: -25%;
+  }
+}
+
+/* ==========================================================================
+   RESPONSIVE - Mobile (max 600px)
+   ========================================================================== */
+
+@media (max-width: 600px) {
+  html { font-size: 15px; }
+
+  .container { padding: 0 10px; margin: 10px auto; }
+
+  .panel { padding: 12px; border-radius: 6px; }
+
+  .panel-title { font-size: 0.9375rem; }
+
+  .app-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .app-header-left { width: 100%; }
+
+  .app-header-actions {
+    width: 100%;
+    justify-content: stretch;
+  }
+
+  .app-header-actions .btn {
+    flex: 1;
+    min-width: 0;
+    font-size: 0.75rem;
+    padding: 8px 10px;
+  }
+
+  /* Form: label sopra input invece che affiancate */
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 4px;
+    margin-bottom: 14px;
+  }
+
+  .form-row label {
+    font-size: 0.75rem;
+    margin-bottom: 2px;
+  }
+
+  /* Tab più compatte */
+  .tab {
+    padding: 10px 12px;
+    font-size: 0.75rem;
+  }
+
+  /* Upload file item: nome file più corto */
+  .upload-file-item {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .file-info { width: 100%; }
+
+  .upload-file-item .btn { align-self: flex-end; }
+
+  /* Preview pagina ancora più piccola */
+  #previewArea { padding: 10px; }
+
+  .page {
+    transform: scale(0.5);
+    transform-origin: top center;
+    margin-bottom: -50%;
+  }
+
+  /* Books list: una colonna */
+  .books-list { grid-template-columns: 1fr; }
+
+  /* Install banner verticale */
+  .install-banner {
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+  }
+
+  .toast {
+    bottom: 10px;
+    font-size: 0.75rem;
+    padding: 10px 16px;
+  }
+}
+
+/* ==========================================================================
+   RESPONSIVE - Smartphone piccoli (max 380px)
+   ========================================================================== */
+
+@media (max-width: 380px) {
+  .app-header-actions {
+    flex-wrap: wrap;
+  }
+
+  .app-header-actions .btn {
+    font-size: 0.6875rem;
+    padding: 6px 8px;
+  }
+
+  .panel { padding: 10px; }
+
+  .page {
+    transform: scale(0.4);
+    margin-bottom: -60%;
+  }
+}
+
+/* ==========================================================================
+   PRINT
+   ========================================================================== */
+
+@media print {
+  .app-header, .tabs, .install-banner, .app-header-actions, .loading-overlay { display: none !important; }
+  .tab-content:not(.active) { display: none !important; }
+  .panel { box-shadow: none; border: none; page-break-inside: avoid; }
+  .page { box-shadow: none; margin: 0; transform: none !important; }
+}
+
+/* ==========================================================================
+   ACCESSIBILITY
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Focus visibile per navigazione tastiera */
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+.tab:focus-visible {
+  outline: 2px solid var(--ved-green);
+  outline-offset: 2px;
+}
+
+/* Dark mode support (futuro) */
+@media (prefers-color-scheme: dark) {
+  /* Placeholder - manteniamo light mode per ora perché il documento è grafico */
+}
