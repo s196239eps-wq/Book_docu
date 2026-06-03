@@ -51,6 +51,13 @@ const DEFAULT_BOOK = {
     progetto: [],
     disegni: [],
     tracciabilita: [],
+    weldingSummary: [],
+    esitoCND: [],
+    patentinoCND: [],
+    wps: [],
+    wpqr: [],
+    patentiniSaldatori: [],
+    filoContinuo: [],
     certLamiera: [],
     certTiranti: [],
     datasheet: [],
@@ -302,6 +309,9 @@ function addMaterialRow() {
 async function handleUpload(event, section) {
   const files = Array.from(event.target.files);
   if (!files.length) return;
+
+  // Sicurezza: se la sezione non esiste ancora (es. book vecchio), la creo
+  if (!currentBook.pdfs[section]) currentBook.pdfs[section] = [];
 
   setLoading(true, 'Caricamento PDF...');
 
@@ -638,7 +648,8 @@ async function generatePDF() {
     const sections1 = [
       { key: 'progetto', label: '1. Progetto' },
       { key: 'disegni', label: '2. Disegni - Meccanico' },
-      { key: 'tracciabilita', label: '2. Disegni - Tracciabilità' }
+      { key: 'tracciabilita', label: '2. Disegni - Tracciabilità' },
+      { key: 'weldingSummary', label: '3. Welding Summary' }
     ];
     for (const sec of sections1) {
       setLoading(true, `Aggiunta ${sec.label}...`);
@@ -649,13 +660,26 @@ async function generatePDF() {
     const materialiPage = document.querySelector('#previewPages .page-materiali');
     if (materialiPage) await addHtmlPageToPdf(finalPdf, materialiPage);
 
+    const weldingDocs = [
+      { key: 'esitoCND', label: '5. Esito CND' },
+      { key: 'patentinoCND', label: '6. Patentino operatore CND' },
+      { key: 'wps', label: '7. WPS' },
+      { key: 'wpqr', label: '8. WPQR' },
+      { key: 'patentiniSaldatori', label: '9. Patentini saldatori' },
+      { key: 'filoContinuo', label: '10. Certificato filo continuo' }
+    ];
+    for (const sec of weldingDocs) {
+      setLoading(true, `Aggiunta ${sec.label}...`);
+      await addPdfsFromSection(finalPdf, sec.key);
+    }
+
     const certSections = [
-      { key: 'certLamiera', label: '4. Certificato Lamiera' },
-      { key: 'certTiranti', label: '5. Certificato Tiranti/Dadi' },
-      { key: 'datasheet', label: '6. Datasheet Sealant' },
-      { key: 'test', label: '7. Test' },
-      { key: 'saldature', label: '8. Saldature' },
-      { key: 'extra', label: '9. Extra' }
+      { key: 'certLamiera', label: '11-12. Certificato Lamiera' },
+      { key: 'certTiranti', label: '13-14. Certificato Tiranti/Dadi' },
+      { key: 'datasheet', label: '15. Datasheet Sealant' },
+      { key: 'test', label: 'Extra - Test' },
+      { key: 'saldature', label: 'Extra - Saldature' },
+      { key: 'extra', label: 'Extra' }
     ];
     for (const sec of certSections) {
       setLoading(true, `Aggiunta ${sec.label}...`);
@@ -978,7 +1002,7 @@ function loadBook(id) {
   currentBook = deepClone(book);
 
   // Assicuro che tutte le chiavi pdfs esistano
-  ['progetto', 'disegni', 'tracciabilita', 'certLamiera', 'certTiranti', 'datasheet', 'test', 'saldature', 'extra']
+  ['progetto', 'disegni', 'tracciabilita', 'weldingSummary', 'esitoCND', 'patentinoCND', 'wps', 'wpqr', 'patentiniSaldatori', 'filoContinuo', 'certLamiera', 'certTiranti', 'datasheet', 'test', 'saldature', 'extra']
     .forEach((k) => {
       if (!currentBook.pdfs[k]) currentBook.pdfs[k] = [];
     });
