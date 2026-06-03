@@ -135,10 +135,22 @@
       </div>
     </div>
 
+    <!-- WELDING SUMMARY -->
+    <div class="panel">
+      <h2 class="panel-title">🔧 3. Welding Summary</h2>
+      <div class="upload-section">
+        <h4>PDF Welding Summary
+          <label for="uploadWeldingSummary" class="btn btn-small btn-primary" style="cursor:pointer;">+ Carica PDF</label>
+          <input type="file" id="uploadWeldingSummary" accept="application/pdf" multiple style="display:none" onchange="handleUpload(event, 'weldingSummary')">
+        </h4>
+        <div class="upload-files-list" id="filesWeldingSummary"></div>
+      </div>
+    </div>
+
     <!-- TABELLA MATERIALI -->
     <div class="panel">
       <h2 class="panel-title">
-        📊 3. Tabella Identificazione Materiali Base
+        📊 4. Tabella Identificazione Materiali Base
         <button class="btn btn-small btn-secondary" onclick="addMaterialRow()">+ Riga</button>
       </h2>
       <div class="form-row"><label for="matProgetto">Progetto</label><input type="text" id="matProgetto"></div>
@@ -185,9 +197,56 @@
       </div>
     </div>
 
+    <!-- DOCUMENTAZIONE SALDATURE -->
+    <div class="panel">
+      <h2 class="panel-title">🔧 5–10. Documentazione Saldature</h2>
+      <div class="upload-section">
+        <h4>5. Esito CND
+          <label for="uploadEsitoCND" class="btn btn-small btn-primary" style="cursor:pointer;">+ Carica PDF</label>
+          <input type="file" id="uploadEsitoCND" accept="application/pdf" multiple style="display:none" onchange="handleUpload(event, 'esitoCND')">
+        </h4>
+        <div class="upload-files-list" id="filesEsitoCND"></div>
+      </div>
+      <div class="upload-section">
+        <h4>6. Patentino operatore CND
+          <label for="uploadPatentinoCND" class="btn btn-small btn-primary" style="cursor:pointer;">+ Carica PDF</label>
+          <input type="file" id="uploadPatentinoCND" accept="application/pdf" multiple style="display:none" onchange="handleUpload(event, 'patentinoCND')">
+        </h4>
+        <div class="upload-files-list" id="filesPatentinoCND"></div>
+      </div>
+      <div class="upload-section">
+        <h4>7. WPS
+          <label for="uploadWps" class="btn btn-small btn-primary" style="cursor:pointer;">+ Carica PDF</label>
+          <input type="file" id="uploadWps" accept="application/pdf" multiple style="display:none" onchange="handleUpload(event, 'wps')">
+        </h4>
+        <div class="upload-files-list" id="filesWps"></div>
+      </div>
+      <div class="upload-section">
+        <h4>8. WPQR
+          <label for="uploadWpqr" class="btn btn-small btn-primary" style="cursor:pointer;">+ Carica PDF</label>
+          <input type="file" id="uploadWpqr" accept="application/pdf" multiple style="display:none" onchange="handleUpload(event, 'wpqr')">
+        </h4>
+        <div class="upload-files-list" id="filesWpqr"></div>
+      </div>
+      <div class="upload-section">
+        <h4>9. Patentini saldatori
+          <label for="uploadPatentiniSaldatori" class="btn btn-small btn-primary" style="cursor:pointer;">+ Carica PDF</label>
+          <input type="file" id="uploadPatentiniSaldatori" accept="application/pdf" multiple style="display:none" onchange="handleUpload(event, 'patentiniSaldatori')">
+        </h4>
+        <div class="upload-files-list" id="filesPatentiniSaldatori"></div>
+      </div>
+      <div class="upload-section">
+        <h4>10. Certificato filo continuo
+          <label for="uploadFiloContinuo" class="btn btn-small btn-primary" style="cursor:pointer;">+ Carica PDF</label>
+          <input type="file" id="uploadFiloContinuo" accept="application/pdf" multiple style="display:none" onchange="handleUpload(event, 'filoContinuo')">
+        </h4>
+        <div class="upload-files-list" id="filesFiloContinuo"></div>
+      </div>
+    </div>
+
     <!-- CERTIFICATI LAMIERA -->
     <div class="panel">
-      <h2 class="panel-title">📄 4. Certificato Lamiera (EN 10204 3.1)</h2>
+      <h2 class="panel-title">📄 11-12. Certificato Lamiera (EN 10204 3.1)</h2>
       <div class="upload-section">
         <h4>PDF Certificati Lamiera
           <label for="uploadCertLamiera" class="btn btn-small btn-primary" style="cursor:pointer;">+ Carica PDF</label>
@@ -199,7 +258,7 @@
 
     <!-- CERTIFICATI TIRANTI -->
     <div class="panel">
-      <h2 class="panel-title">📄 5. Certificato Tiranti e Dadi (EN 10204 3.1)</h2>
+      <h2 class="panel-title">📄 13-14. Certificato Tiranti e Dadi (EN 10204 3.1)</h2>
       <div class="upload-section">
         <h4>PDF Certificati Tiranti/Dadi
           <label for="uploadCertTiranti" class="btn btn-small btn-primary" style="cursor:pointer;">+ Carica PDF</label>
@@ -211,7 +270,7 @@
 
     <!-- DATASHEET -->
     <div class="panel">
-      <h2 class="panel-title">📄 6. Technical Datasheet Sealant Compound</h2>
+      <h2 class="panel-title">📄 15. Technical Datasheet Sealant Compound</h2>
       <div class="upload-section">
         <h4>PDF Datasheet Sealant
           <label for="uploadDatasheet" class="btn btn-small btn-primary" style="cursor:pointer;">+ Carica PDF</label>
